@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FSMS - Sign Up</title>
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg">
+    <div class="box">
+      <h1>Sign Up</h1>
+      <br />
+      <form action="./process_signup_login.php" method="POST">
+        <input type="text" name="chef_username" placeholder="Username" required />
+        <input type="text" name="chef_fname" placeholder="First Name" />
+        <input type="text" name="chef_lname" placeholder="Last Name" />
+        <input type="text" name="chef_age" placeholder="Age" />
+        <select name="chef_gender">
+          <option value="" disabled selected>Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="password" name="chef_password" placeholder="Password" required />
+        <input type="hidden" name="signed_up" class="button" value="1" />
+        <input type="submit" name="signup" class="button" value="Sign Up" />
+      </form>
+      <div class="member">
+        Already a member? <a href="./login.html"> Login Here </a>
+      </div>
+    </div>
+  </body>
+</html>

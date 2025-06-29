@@ -1,0 +1,6 @@
+refactor all hardcoded strings (e.g. database column names) like that in android studio
+use javascript/html/css for input validation like regex
+complete the feature 'status_checking'
+improve layout of 'personal_info'
+improve layout of buttons, links etc
+improve layout for updating chef and ingredient (only relevant field clicked should be prompted for update/edit)
