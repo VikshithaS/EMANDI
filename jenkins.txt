@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+
+    environment {
+        // Customize these as per your environment
+        NODE_VERSION = '18.16.0'
+    }
+
+    tools {
+        nodejs "${NODE_VERSION}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing backend dependencies...'
+                sh 'npm install'
+
+                echo 'Installing frontend dependencies...'
+                dir('frontend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Database Migrations') {
+            steps {
+                echo 'Running database migrations if required...'
+                // Example:
+                // sh 'npx sequelize-cli db:migrate'
+            }
+        }
+
+        stage('Run Backend Tests') {
+            steps {
+                echo 'Running backend tests...'
+                sh 'npm test'
+            }
+        }
+
+        stage('Run Frontend Tests') {
+            steps {
+                echo 'Running frontend tests...'
+                dir('frontend') {
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                echo 'Building frontend...'
+                dir('frontend') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Archive Reports') {
+            steps {
+                echo 'Archiving reports and build artifacts...'
+                archiveArtifacts artifacts: '**/reports/**/*.*', allowEmptyArchive: true
+                archiveArtifacts artifacts: '**/frontend/build/**/*.*', allowEmptyArchive: true
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Deploying to production server...'
+                // Example deployment step
+                // sh './deploy.sh'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning workspace...'
+            cleanWs()
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
